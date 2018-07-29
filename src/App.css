@@ -1,0 +1,39 @@
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  font-weight: "bold";
+  color: #70767c;
+  letter-spacing: .05rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.input {
+  margin: 0 5px;
+  border-radius: .25rem;
+  border: 1px #70767c solid;
+  padding: 2px;
+}
+
+.answer {
+  margin: 20px 0 30px;
+}
+
+.error {
+  color: #70767c;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline;
+  background: #ff790f;
+  padding: 6px 10px;
+  border-radius: .25rem;
+  font-size: 16px;
+  letter-spacing: .025rem;
+  color: #ffffff;
+}

@@ -5,17 +5,18 @@ const {
   spanishVerbs, spanishPronouns, germanVerbs, germanPronouns,
 } = Verbs;
 
-const NUM_TOTAL = 10;
+const NUM_TOTAL = 5;
 
-const StartScreen = ({ chooseLanguage, wrongAnswerMsg }) => (
-  <div>
-    {wrongAnswerMsg && (
-      <div className="error">
-        {wrongAnswerMsg}
-      </div>
-    )}
+const StartScreen = ({ chooseLanguage }) => (
+  <div style={{ maxWidth: '380px', margin: '0 auto', lineHeight: '23px' }}>
     <br />
-    {"Choose your language:"}
+    {"Did you know: verbs and conjugations form about 30% of expression in European languages! Practice them and you'll greatly accelerate your learning"}
+    <br />
+    {"🔥🔥🔥"}
+    <br />
+    <br />
+    <br />
+    <b>{"Choose your language:"}</b>
     <br />
     <br />
     <br />
@@ -27,6 +28,41 @@ const StartScreen = ({ chooseLanguage, wrongAnswerMsg }) => (
     <br />
     <div onClick={chooseLanguage("german")} className="button">
       {"German"}
+    </div>
+  </div>
+)
+
+const EndScreen = ({ numCorrect, wrongAnswerMsg, onNext }) => (
+  <div>
+    <br />
+    <div className="msg">
+      {wrongAnswerMsg}
+    </div>
+    <br />
+    {
+      numCorrect / NUM_TOTAL > 0.5 ? (
+        <div className='msg'>
+          <iframe src="https://giphy.com/embed/3o7bug8jhF3LvXDxvy" style={{ maxWidth: '100%' }} width="420" height="420" frameBorder="0" className="giphy-embed" allowFullScreen>
+          </iframe>
+          <br />
+          <br />
+          <br />
+          {"Keep it up! You're on 🔥"}
+        </div>
+      ) : (
+        <div className='msg'>
+          <iframe src="https://giphy.com/embed/xUOrwqC3pygvqNUNXy" style={{ maxWidth: '100%' }} width="420" height="420" frameBorder="0" className="giphy-embed" allowFullScreen>
+          </iframe>
+          <br />
+          <br />
+          <br />
+          {"Practice makes perfect! You'll do better next time 😉"}
+        </div>
+      )
+    }
+    <br />
+    <div onClick={onNext} className="button">
+      {"Play again"}
     </div>
   </div>
 )
@@ -93,6 +129,7 @@ class App extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -153,7 +190,7 @@ class App extends Component {
 
     this.setState(prevState => ({ numAnswered: prevState.numAnswered + 1 }));
 
-    const isGameOver = this.state.numAnswered === NUM_TOTAL;
+    const isGameOver = this.state.numAnswered === NUM_TOTAL - 1;
 
     if (input === correctAnswer) {
       this.setState({ numCorrect: numCorrect + 1, wrongAnswerMsg: `Correct!${isGameOver ? ` Your score is ${numCorrect + 1} out of ${NUM_TOTAL}` : ''}` });
@@ -161,7 +198,7 @@ class App extends Component {
       this.setState({ wrongAnswerMsg: `Sorry, the correct conjugation is "${correctAnswer}".${isGameOver ? ` Your score is ${numCorrect} out of ${NUM_TOTAL}` : ''}`})
     }
     this.setState({ input: '', pronoun: this.randomPronoun(), currentVerb: this.sample(verbs) });
-    if (isGameOver) { this.setState({ route: 'home' }); }
+    if (isGameOver) { this.setState({ route: 'gameOver' }); }
   }
 
   render() {
@@ -171,7 +208,7 @@ class App extends Component {
         <h2 className="header">{"Conjugator"}</h2>
         {
           route === 'home' && (
-            <StartScreen chooseLanguage={this.handleNext} wrongAnswerMsg={wrongAnswerMsg} />
+            <StartScreen chooseLanguage={this.handleNext} />
           )
         }
         {
@@ -181,6 +218,13 @@ class App extends Component {
               conjugations={this.conjugations(currentLanguage)}
               pronouns={this.pronouns(currentLanguage)}
               onNext={this.startGame}
+            />
+          )
+        }
+        {
+          route === 'gameOver' && (
+            <EndScreen
+              numCorrect={numCorrect} wrongAnswerMsg={wrongAnswerMsg} onNext={() => this.setState({ route: 'home' })}
             />
           )
         }
@@ -203,7 +247,7 @@ class App extends Component {
                 />
               </div>
               {wrongAnswerMsg && (
-                <div className="error">
+                <div className="msg">
                   {wrongAnswerMsg}
                 </div>
               )}

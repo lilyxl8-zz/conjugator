@@ -34,7 +34,7 @@ const InfoModal = ({ handleClose, modalVisible, children }) => {
 const StartScreen = ({ chooseLanguage }) => (
   <div style={{ maxWidth: "380px", margin: "0 auto", lineHeight: "23px" }}>
     <br />
-    {"Are you ready to train?"}
+    {"Are you ready to practice some verbs?"}
     <br />
     <br />
     <iframe
@@ -133,7 +133,7 @@ class StudyScreen extends Component {
         <br />
         <br />
         <br />
-        {"These are the verbs you'll be training:"}
+        {"These are the verbs you'll be practicing 🙃"}
         <br />
         <br />
         {Object.keys(conjugations).map(verb => (
@@ -349,6 +349,12 @@ class App extends Component {
             <br />
             {"Your score: "}
             <b>{numCorrect}</b>
+            <br />
+            {numCorrect / numAnswered < 0.33 && "😐"}
+            {numCorrect / numAnswered > 0.33 &&
+              numCorrect / numAnswered < 0.66 &&
+              "😬"}
+            {numCorrect / numAnswered > 0.66 && "😃"}
           </div>
         )}
       </div>

@@ -5,25 +5,21 @@ const { spanishVerbs, spanishPronouns, germanVerbs, germanPronouns } = Verbs;
 
 const NUM_TOTAL = 5;
 
-const InfoModal = ({ handleClose, modalVisible, children }) => {
-  const showHideClassName = modalVisible
-    ? "modal display-block"
-    : "modal display-none";
-
+const InfoBanner = ({ handleClose }) => {
   return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
+    <div className="modal">
+      <section className="banner">
         <b>{"Did You Know"}</b>
         <br />
         <br />
         {
-          "Verbs and conjugations form about 30% of expression in European languages! Practice them and you'll greatly accelerate your learning"
+          "Verbs and conjugations make up about 30% of expression in European languages! Practice them and you'll greatly accelerate your learning"
         }
         <br />
         {"🔥🔥🔥"}
         <br />
         <br />
-        <div className="button" onClick={handleClose}>
+        <div className="button btn-lite" onClick={handleClose}>
           {"Got it!"}
         </div>
       </section>
@@ -31,8 +27,11 @@ const InfoModal = ({ handleClose, modalVisible, children }) => {
   );
 };
 
-const StartScreen = ({ chooseLanguage }) => (
+const StartScreen = ({ chooseLanguage, bannerVisible, hideInfoBanner }) => (
   <div style={{ maxWidth: "380px", margin: "0 auto", lineHeight: "23px" }}>
+    {bannerVisible && (
+      <InfoBanner handleClose={hideInfoBanner} />
+    )}
     <br />
     {"Are you ready to practice some verbs?"}
     <br />
@@ -53,12 +52,12 @@ const StartScreen = ({ chooseLanguage }) => (
     <br />
     <div
       onClick={chooseLanguage("spanish")}
-      className="button"
+      className="button btn-orange"
       style={{ marginRight: "20px" }}
     >
       {"Spanish"}
     </div>
-    <div onClick={chooseLanguage("german")} className="button">
+    <div onClick={chooseLanguage("german")} className="button btn-orange">
       {"German"}
     </div>
   </div>
@@ -110,7 +109,7 @@ const EndScreen = ({ numCorrect, wrongAnswerMsg, onNext }) => (
     )}
     <br />
     <br />
-    <div onClick={onNext} className="button">
+    <div onClick={onNext} className="button btn-orange">
       {"Play again"}
     </div>
   </div>
@@ -125,7 +124,7 @@ class StudyScreen extends Component {
         <h1 style={{ textTransform: "capitalize" }}>{language}</h1>
         <br />
         <br />
-        <div onClick={onNext} className="button">
+        <div onClick={onNext} className="button btn-orange">
           {"Start"}
         </div>
         <br />
@@ -152,7 +151,7 @@ class StudyScreen extends Component {
         <br />
         <br />
         <br />
-        <div onClick={onNext} className="button">
+        <div onClick={onNext} className="button btn-orange">
           {"Start"}
         </div>
       </div>
@@ -173,7 +172,7 @@ class App extends Component {
       input: "",
       wrongAnswerMsg: "",
       route: "home",
-      modalVisible: true
+      bannerVisible: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -271,8 +270,8 @@ class App extends Component {
     }));
   }
 
-  hideInfoModal = () => {
-    this.setState({ modalVisible: false });
+  hideInfoBanner = () => {
+    this.setState({ bannerVisible: false });
   };
 
   render() {
@@ -285,16 +284,16 @@ class App extends Component {
       numCorrect,
       numAnswered,
       wrongAnswerMsg,
-      modalVisible
+      bannerVisible
     } = this.state;
     return (
       <div className="App">
-        <InfoModal
-          modalVisible={modalVisible}
-          handleClose={this.hideInfoModal}
-        />
         <h2 className="header">{"Conjugator"}</h2>
-        {route === "home" && <StartScreen chooseLanguage={this.handleNext} />}
+        {route === "home" && <StartScreen
+          chooseLanguage={this.handleNext}
+          bannerVisible={bannerVisible}
+          hideInfoBanner={this.hideInfoBanner}
+        />}
         {route === "study" && (
           <StudyScreen
             language={currentLanguage}
@@ -336,11 +335,11 @@ class App extends Component {
               )}
             </div>
             {wrongAnswerMsg ? (
-              <div onClick={this.handleNextVerb} className="button">
+              <div onClick={this.handleNextVerb} className="button btn-orange">
                 {"Next"}
               </div>
             ) : (
-              <div onClick={this.handleSubmit} className="button">
+              <div onClick={this.handleSubmit} className="button btn-orange">
                 {"Submit"}
               </div>
             )}

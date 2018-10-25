@@ -39,12 +39,21 @@
 
 .button {
   display: inline;
-  background: #ff790f;
   padding: 6px 10px;
   border-radius: 0.25rem;
   font-size: 16px;
   letter-spacing: 0.025rem;
-  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-orange {
+  background: #ff790f;
+  color: white;
+}
+
+.btn-lite {
+  background: #f4f8fa;
+  color: #70767c;
 }
 
 .verbContainer {
@@ -69,30 +78,16 @@
 
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  bottom: 60px;
+  right: 20px;
+  width: 200px;
+  height: 200px;
 }
 
-.modal-main {
-  position: fixed;
-  background: white;
-  width: 80%;
-  max-width: 500px;
-  height: auto;
-  top: 50%;
-  left: 50%;
-  padding: 20px;
-  line-height: 24px;
-  transform: translate(-50%, -50%);
-}
-
-.display-block {
-  display: block;
-}
-
-.display-none {
-  display: none;
+.banner {
+  background: #44CDC9;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 14px;
+  padding: 10px 0;
 }
